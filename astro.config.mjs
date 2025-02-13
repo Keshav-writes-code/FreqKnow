@@ -18,4 +18,6 @@ export default defineConfig({
       ],
     }),
   ],
+  site: "https://keshav.is-a.dev",
+  base: "FreqKnow",
 });
