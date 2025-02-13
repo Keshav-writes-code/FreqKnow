@@ -16,6 +16,11 @@ export default defineConfig({
           autogenerate: { directory: "linux" },
         },
       ],
+      customCss: [
+        "@fontsource/atkinson-hyperlegible/400.css",
+        "@fontsource/atkinson-hyperlegible/700.css",
+        "./src/styles/custom.css",
+      ],
     }),
   ],
   site: "https://keshav.is-a.dev",
