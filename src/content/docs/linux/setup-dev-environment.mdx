@@ -2,15 +2,53 @@
 title: Setup My WebDev Environment
 description: A guide to Setup My Web Dev Environemtn
 ---
+import { Steps } from '@astrojs/starlight/components';
 
-Guides lead a user through a specific task they want to accomplish, often with a sequence of steps.
-Writing a good guide requires thinking about what your users are trying to do.
+This guide will walk you through my Webdev Environment Setup.
+My OS of choice is Antix Linux
 
-## Further reading
+## Neovim Setup
 
-- Read [about how-to guides](https://diataxis.fr/how-to-guides/) in the Diátaxis framework
+- I like to use [Lazyvim](https://www.lazyvim.org/) 
+#### Debian (zsh)
+<Steps>
+  1. Install Prerequisites
+      ```shell
+      sudo apt install curl git fzf
+      ```
 
-import { Code } from "@astrojs/starlight/components";
-export const exampleCode = `sudo apt install git zsh lazygit build-essential`;
+  2. Install Neovim (Latest Version)
 
-<Code code={exampleCode} lang="shell" title="One Line Setup" />
+      ```shell
+      curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+      sudo rm -rf /opt/nvim
+      sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+      echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
+      source ~/.zshrc
+      ```
+  3. Install Lazyvim (My Custom Lazyvim)
+
+      ```shell
+      sudo apt install git -y &&
+      mv ~/.config/nvim{,.bak}
+      git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
+      ```
+  4. Install Lazygit 
+
+      ```shell
+      LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+      curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+      tar xf lazygit.tar.gz lazygit
+      sudo install lazygit -D -t /usr/local/bin/
+      ```
+  5. Install a NerdFont. Jetbrains Mono is the default standard
+  
+      ```shell
+      bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+      ```
+      - Enter 28 on Prompt
+  5. Done! You can Launch Neovim now
+      ```shell
+      nvim
+      ```
+</Steps>
