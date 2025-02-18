@@ -52,3 +52,34 @@ My OS of choice is Antix Linux
       nvim
       ```
 </Steps>
+
+## Terminal Setup
+- I like to use [Alacritty](https://alacritty.org/) with [Oh My Zsh](https://ohmyz.sh/)
+<Steps>
+  1. Install Alacritty
+      - Ubuntu
+      ```shell
+      sudo add-apt-repository ppa:aslatter/ppa -y
+      sudo apt install alacritty
+      ```
+      - Debian
+      ```shell
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
+      apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
+      cargo install alacritty
+      ```
+  2. Install Oh My Zsh
+
+      ```shell
+      sudo apt install zsh &&
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      ```
+  3. Install Zoxide
+
+      ```shell
+      curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+      echo 'export PATH="$PATH:/home/keshav/.local/bin"' >> ~/.zshrc
+      echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
+      source ~/.zshrc
+      ```
+</Steps>
