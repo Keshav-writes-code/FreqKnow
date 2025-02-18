@@ -2,89 +2,106 @@
 title: Setup My WebDev Environment
 description: A guide to Setup My Web Dev Environemtn
 ---
-import { Steps } from '@astrojs/starlight/components';
+
+import { Steps } from "@astrojs/starlight/components";
 
 This guide will walk you through my Webdev Environment Setup.
 My OS of choice is Antix Linux
 
 ## Neovim Setup
 
-- I like to use [Lazyvim](https://www.lazyvim.org/) 
+- I like to use [Lazyvim](https://www.lazyvim.org/)
+
 #### Debian (zsh)
+
 <Steps>
-  1. Install Prerequisites
-      ```shell
-      sudo apt install curl git fzf
-      ```
-
-  2. Install Neovim (Latest Version)
-
-      ```shell
-      curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-      sudo rm -rf /opt/nvim
-      sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-      echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
-      source ~/.zshrc
-      ```
-  3. Install Lazyvim (My Custom Lazyvim)
-
-      ```shell
-      sudo apt install git -y &&
-      mv ~/.config/nvim{,.bak}
-      git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
-      ```
-  4. Install Lazygit 
-
-      ```shell
-      LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-      curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-      tar xf lazygit.tar.gz lazygit
-      sudo install lazygit -D -t /usr/local/bin/
-      ```
-  5. Install a NerdFont. Jetbrains Mono is the default standard
   
-      ```shell
-      bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
-      ```
-      - Enter 28 on Prompt
-  5. Done! You can Launch Neovim now
-      ```shell
-      nvim
-      ```
-</Steps>
+1. Install Prerequisites
+
+    ```shell
+    sudo apt install curl git fzf
+    ```
+
+2. Install Neovim (Latest Version)
+
+   ```shell
+   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+   sudo rm -rf /opt/nvim
+   sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+   echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. Install Lazyvim (My Custom Lazyvim)
+
+   ```shell
+   mv ~/.config/nvim{,.bak}
+   git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
+   ```
+
+4. Install Lazygit
+
+   ```shell
+   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+   curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+   tar xf lazygit.tar.gz lazygit
+   sudo install lazygit -D -t /usr/local/bin/
+   ```
+
+5. Install a NerdFont. Jetbrains Mono is the default standard
+
+   ```shell
+   bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+   ```
+
+   - Enter 28 on Prompt
+
+6. Done! You can Launch Neovim now
+   `shell
+nvim
+`
+   </Steps>
 
 ## Terminal Setup
+
 - I like to use [Alacritty](https://alacritty.org/) with [Oh My Zsh](https://ohmyz.sh/)
 
 <Steps>
 
-  1. Install Alacritty
-      - Ubuntu
-      ```shell
-      sudo add-apt-repository ppa:aslatter/ppa -y
-      sudo apt install alacritty
-      ```
-      - Debian
-      ```shell
-      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
-      apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
-      cargo install alacritty
-      ```
-  2. Install Oh My Zsh
+1. Install Alacritty
 
-      ```shell
-      sudo apt install zsh &&
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      ```
-  3. Install Zoxide
+    - Ubuntu
 
-      ```shell
-      curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-      echo 'export PATH="$PATH:/home/keshav/.local/bin"' >> ~/.zshrc
-      echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
-      source ~/.zshrc
-      ```
-</Steps>
+    ```shell
+    sudo add-apt-repository ppa:aslatter/ppa -y
+    sudo apt install alacritty
+    ```
+
+    - Debian
+
+    ```shell
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
+    apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
+    cargo install alacritty
+    ```
+
+2. Install Oh My Zsh
+
+    ```shell
+    sudo apt install zsh &&
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    ```
+
+3. Install Zoxide
+
+          ```shell
+          curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+          echo 'export PATH="$PATH:/home/keshav/.local/bin"' >> ~/.zshrc
+          echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
+          source ~/.zshrc
+          ```
+
+    </Steps>
 
 ## Git Setup
 
@@ -92,23 +109,26 @@ My OS of choice is Antix Linux
 
 <Steps>
 
-  1. Install Github cli
-      ```shell
-      (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-      && sudo mkdir -p -m 755 /etc/apt/keyrings \
-            && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-            && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-      && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-      && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-      && sudo apt update \
-      && sudo apt install gh -y
-      ```
-  2. Login from git Cli
+1. Install Github cli
 
-      ```shell
-      gh auth login.
-      ```
-  3. Follow the Steps as the Github Cli walks you through them. Choose HTTPS Authentication and Setup a Keyring password in the Process 
-  4. Test github & git setup by Doing a Push to comitted changes in a git repo
+   ```shell
+   (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+   && sudo mkdir -p -m 755 /etc/apt/keyrings \
+         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+         && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+   && sudo apt update \
+   && sudo apt install gh -y
+   ```
+
+2. Login from git Cli
+
+   ```shell
+   gh auth login.
+   ```
+
+3. Follow the Steps as the Github Cli walks you through them. Choose HTTPS Authentication and Setup a Keyring password in the Process
+4. Test github & git setup by Doing a Push to comitted changes in a git repo
 
 </Steps>
