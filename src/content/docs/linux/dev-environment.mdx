@@ -3,6 +3,7 @@ title: Dev Environment Setup
 description: A guide to Setup My Web Dev Environemtn
 ---
 import { Steps } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 This guide will walk you through my Webdev Environment Setup.
 My OS of choice is Antix Linux
@@ -19,17 +20,22 @@ sudo apt install curl git fzf
 
 1. ### Alacritty
     Install the [Alacritty](https://alacritty.org/) Terminal Emulator
-    - Ubuntu
-    ```shell frame="none"
-    sudo add-apt-repository ppa:aslatter/ppa -y
-    sudo apt install alacritty
-    ```
-    - Debian
-    ```shell frame="none"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
-    apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
-    cargo install alacritty
-    ```
+    <Tabs>
+      <TabItem label="Ubuntu">
+        ```shell frame="none"
+        sudo add-apt-repository ppa:aslatter/ppa -y
+        sudo apt install alacritty
+        ```
+        Restart Ubuntu and Alacritty should be you default Terminal
+      </TabItem>
+      <TabItem label="Debian">
+        ```shell frame="none"
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
+        apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
+        cargo install alacritty
+        ```
+      </TabItem>
+    </Tabs>
 2. ### Oh My Zsh
     install the [Oh My Zsh](https://ohmyz.sh/) framework for [ZSH](https://www.zsh.org/) Shell
     ```shell frame="none"
