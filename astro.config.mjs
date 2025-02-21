@@ -7,8 +7,15 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "FreqKnow",
+      editLink: {
+        baseUrl: "https://github.com/Keshav-writes-code/FreqKnow/tree/main",
+      },
       social: {
-        github: "https://github.com/withastro/starlight",
+        github: "https://github.com/Keshav-writes-code",
+      },
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
+      logo: {
+        src: "./src/assets/logo.svg",
       },
       sidebar: [
         {
