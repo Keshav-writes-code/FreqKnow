@@ -53,7 +53,7 @@ sudo apt install curl git fzf
 #### Debian (zsh)
 <Steps>
 
-  2. Install Neovim (Latest Version)
+  1. Install Neovim (Latest Version)
 
       ```shell
       curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
@@ -62,13 +62,13 @@ sudo apt install curl git fzf
       echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
       source ~/.zshrc
       ```
-  3. Install Lazyvim (My Custom Lazyvim)
+  2. Install Lazyvim (My Custom Lazyvim)
 
       ```shell
       mv ~/.config/nvim{,.bak}
       git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
       ```
-  4. Install Lazygit 
+  3. Install Lazygit 
 
       ```shell
       LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -76,7 +76,7 @@ sudo apt install curl git fzf
       tar xf lazygit.tar.gz lazygit
       sudo install lazygit -D -t /usr/local/bin/
       ```
-  5. Install a NerdFont. Jetbrains Mono is the default standard
+  4. Install a NerdFont. Jetbrains Mono is the default standard
   
       ```shell
       bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
@@ -86,6 +86,23 @@ sudo apt install curl git fzf
       ```shell
       nvim
       ```
+  6. __(Optional)__ Install Git-Delta for Side by Side Diff in lazygit.\
+      Download the `git-delta-musl_<version>_<arch>.deb` from the [Release Page](https://github.com/dandavison/delta/releases)\
+      Install the .deb using :
+      ```shell
+      sudo apt install ~/Downloads/git-delta-musl_0.18.2_amd64.deb -y
+      ```
+      Run this Command to add config into `~/.config/lazygit/config.yml`
+      ```shell
+      cat <<EOF >> ~/.config/lazygit/config.yml
+
+      git:
+        paging:
+          colorArg: always
+          pager: delta --side-by-side --paging=never
+      EOF
+      ```
+      Restart Lazygit from Neovim and it Will work
 </Steps>
 
 
