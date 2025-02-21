@@ -1,5 +1,5 @@
 ---
-title: WebDev Environment Setup
+title: Dev Environment Setup
 description: A guide to Setup My Web Dev Environemtn
 ---
 import { Steps } from '@astrojs/starlight/components';
@@ -134,6 +134,24 @@ sudo apt install curl git fzf
 
       ```shell frame="none"
       curl -fsSL https://bun.sh/install | bash
+      ```
+
+</Steps>
+
+### Python Setup
+
+<Steps>
+
+  1. #### Python
+      Install [Python](https://www.python.org/) via linux package manager
+      ```shell frame="none"
+      sudo apt install python3
+      ```
+  2. #### UV
+      Install [UV](https://docs.astral.sh/uv/), An extremely fast Python package and project manager, written in Rust
+
+      ```shell frame="none"
+      curl -LsSf https://astral.sh/uv/install.sh | sh
       ```
 
 </Steps>
