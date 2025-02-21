@@ -17,7 +17,7 @@ sudo apt install curl git fzf
 
 <Steps>
 
-  1. Install Alacritty
+  1. ### Alacritty
       - Ubuntu
       ```shell
       sudo add-apt-repository ppa:aslatter/ppa -y
@@ -29,13 +29,13 @@ sudo apt install curl git fzf
       apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
       cargo install alacritty
       ```
-  2. Install Oh My Zsh
+  2. ### Oh My Zsh
 
       ```shell
       sudo apt install zsh &&
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
       ```
-  3. Install Zoxide
+  3. ### Zoxide
 
       ```shell
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
@@ -50,10 +50,11 @@ sudo apt install curl git fzf
 ## Neovim Setup
 
 - I like to use [Lazyvim](https://www.lazyvim.org/) 
-#### Debian (zsh)
+- Debian (ZSH) Based Steps
 <Steps>
 
-  1. Install Neovim (Latest Version)
+  1. ### Neovim
+      Neovim (Latest Version)
 
       ```shell
       curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
@@ -62,13 +63,14 @@ sudo apt install curl git fzf
       echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
       source ~/.zshrc
       ```
-  2. Install Lazyvim (My Custom Lazyvim)
+  2. ### Lazyvim 
+      This is my Custom Fork of Lazyvim config 
 
       ```shell
       mv ~/.config/nvim{,.bak}
       git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
       ```
-  3. Install Lazygit 
+  3. ### Lazygit 
 
       ```shell
       LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -76,17 +78,20 @@ sudo apt install curl git fzf
       tar xf lazygit.tar.gz lazygit
       sudo install lazygit -D -t /usr/local/bin/
       ```
-  4. Install a NerdFont. Jetbrains Mono is the default standard
+  4. ### NerdFont
+      Jetbrains Mono is the default standard
   
       ```shell
       bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
       ```
       - Enter 28 on Prompt
-  5. Done! You can Launch Neovim now
+  5. ### Done!
+      You can Launch Neovim now
       ```shell
       nvim
       ```
-  6. __(Optional)__ Install Git-Delta for Side by Side Diff in lazygit.\
+  6. ### Git Delta (Optional)
+      For Side by Side Diff in lazygit.\
       Download the `git-delta-musl_<version>_<arch>.deb` from the [Release Page](https://github.com/dandavison/delta/releases)\
       Install the .deb using :
       ```shell
@@ -112,13 +117,13 @@ sudo apt install curl git fzf
 
 <Steps>
 
-  1. Install Node
+  1. ### Node
       ```shell
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash &&
       \. "$HOME/.nvm/nvm.sh"
       nvm install 22
       ```
-  2. Install Bun
+  2. ### Bun
 
       ```shell
       curl -fsSL https://bun.sh/install | bash
@@ -126,13 +131,14 @@ sudo apt install curl git fzf
 
 </Steps>
 
-## Git Setup
+## Github Setup
 
 - this will setup git with github
 
 <Steps>
 
-  1. Install Github cli
+  1. ### Github Cli
+      Install Github Cli [(Refrence)](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)
       ```shell
       (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
       && sudo mkdir -p -m 755 /etc/apt/keyrings \
@@ -143,17 +149,18 @@ sudo apt install curl git fzf
       && sudo apt update \
       && sudo apt install gh -y
       ```
-  2. Login from git Cli
+  2. ### Login to Github
+      Authenticating with GitHub from Git to Manage github repos from git Cli [(Refrence)](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git#authenticating-with-github-from-git)
 
       ```shell
       gh auth login.
       ```
-  3. Follow the Steps as the Github Cli walks you through them. Choose HTTPS Authentication and Setup a Keyring password in the Process 
-  4. Set git username and email globally
+      Follow the Steps as the Github Cli walks you through them. Choose HTTPS Authentication and Setup a Keyring password in the Process 
+  3. ### Set your username in Git 
       ```shell
-      git config --global user.email "dhimankeshav201@gmail.com"
-      git config --global user.name "keshav-writes-code"
+      git config --global user.email "<email>"
+      git config --global user.name "<uname>"
       ```
-  5. Test github & git setup by Doing a Push to comitted changes in a git repo
+      Test github & git setup by Doing a Push to comitted changes in a git repo
 
 </Steps>
