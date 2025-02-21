@@ -8,7 +8,7 @@ This guide will walk you through my Webdev Environment Setup.
 My OS of choice is Antix Linux
 
 ## Install Prerequisite
-```shell
+```shell frame="none"
 sudo apt install curl git fzf
 ```
 
@@ -20,26 +20,26 @@ sudo apt install curl git fzf
   1. ### Alacritty
       Install the [Alacritty](https://alacritty.org/) Terminal Emulator
       - Ubuntu
-      ```shell
+      ```shell frame="none"
       sudo add-apt-repository ppa:aslatter/ppa -y
       sudo apt install alacritty
       ```
       - Debian
-      ```shell
+      ```shell frame="none"
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
       apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 &&
       cargo install alacritty
       ```
   2. ### Oh My Zsh
       install the [Oh My Zsh](https://ohmyz.sh/) framework for [ZSH](https://www.zsh.org/) Shell
-      ```shell
+      ```shell frame="none"
       sudo apt install zsh &&
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
       ```
   3. ### Zoxide
       Install a smarter cd command alternative. [zoxide](https://github.com/ajeetdsouza/zoxide) 
 
-      ```shell
+      ```shell frame="none"
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
       echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
       echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
@@ -58,7 +58,7 @@ sudo apt install curl git fzf
   1. ### Neovim
       Install [ Neovim](https://github.com/neovim/neovim) (Latest Version)
 
-      ```shell
+      ```shell frame="none"
       curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
       sudo rm -rf /opt/nvim
       sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
@@ -68,13 +68,13 @@ sudo apt install curl git fzf
   2. ### Lazyvim 
       Install my Custom Fork of Lazyvim config 
 
-      ```shell
+      ```shell frame="none"
       mv ~/.config/nvim{,.bak}
       git clone https://github.com/Keshav-writes-code/nvim.git ~/.config/nvim
       ```
   3. ### Lazygit 
       Install [ Lazygit](https://github.com/jesseduffield/lazygit), a simple terminal UI for git commands
-      ```shell
+      ```shell frame="none"
       LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
       curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
       tar xf lazygit.tar.gz lazygit
@@ -84,24 +84,24 @@ sudo apt install curl git fzf
       Install a NerdFont needed for various icons and UI element for Neovim.\
       Jetbrains Mono is the default standard
   
-      ```shell
+      ```shell frame="none"
       bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
       ```
       - Enter 28 on Prompt
   5. ### Done!
       You can Launch Neovim now
-      ```shell
+      ```shell frame="none"
       nvim
       ```
   6. ### Git Delta (Optional)
       For Side by Side Diff in lazygit.\
       Download the `git-delta-musl_<version>_<arch>.deb` from the [Release Page](https://github.com/dandavison/delta/releases)\
       Install the .deb using :
-      ```shell
+      ```shell frame="none"
       sudo apt install ~/Downloads/git-delta-musl_0.18.2_amd64.deb -y
       ```
       Run this Command to add config into `~/.config/lazygit/config.yml`
-      ```shell
+      ```shell frame="none"
       cat <<EOF >> ~/.config/lazygit/config.yml
 
       git:
@@ -118,19 +118,21 @@ sudo apt install curl git fzf
 
 - this will install necessary application like runtimes needed for Development
 
+### Webdev Tools
+
 <Steps>
 
-  1. ### NodeJs
+  1. #### NodeJs
       Install [ Nodejs](https://nodejs.org/en) via Node Version Manager
-      ```shell
+      ```shell frame="none"
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash &&
       \. "$HOME/.nvm/nvm.sh"
       nvm install 22
       ```
-  2. ### Bun
+  2. #### Bun
       Install [Bun](https://bun.sh/), a fast Nodejs, npm replacement that relies on Nodejs realistically speaking
 
-      ```shell
+      ```shell frame="none"
       curl -fsSL https://bun.sh/install | bash
       ```
 
@@ -144,7 +146,7 @@ sudo apt install curl git fzf
 
   1. ### Github Cli
       Install Github Cli [(Refrence)](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)
-      ```shell
+      ```shell frame="none"
       (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
       && sudo mkdir -p -m 755 /etc/apt/keyrings \
             && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
@@ -157,12 +159,12 @@ sudo apt install curl git fzf
   2. ### Login to Github
       Authenticating with GitHub from Git to Manage github repos from git Cli [(Refrence)](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git#authenticating-with-github-from-git)
 
-      ```shell
+      ```shell frame="none"
       gh auth login.
       ```
       Follow the Steps as the Github Cli walks you through them. Choose HTTPS Authentication and Setup a Keyring password in the Process 
   3. ### Set your username in Git 
-      ```shell
+      ```shell frame="none"
       git config --global user.email "<email>"
       git config --global user.name "<uname>"
       ```
