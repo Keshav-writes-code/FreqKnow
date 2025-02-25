@@ -29,7 +29,6 @@ This guide will walk you through my Antix Linux Environment Optimized for Produc
 2. Update grub
     ```shell
     sudo update-grub
-
     ```
 </Steps>
 
@@ -37,7 +36,7 @@ This guide will walk you through my Antix Linux Environment Optimized for Produc
 - Change all the Disk configurations to get Automount functionlaity
 
 <Steps>
-1. Edit `/etc/fstab` file add change `defaults` keyword after Filesystem format (ntfs, exy4 etc)
+1. Edit `/etc/fstab` file add change `defaults` keyword after Filesystem format (ntfs, ext4 etc) for the Disks you want to Automount 
     ```diff lang="shell" title="/etc/fstab" 
     -UUID=C45E5BF55E5BDEA    /media/C45E5BF55E5BDEAC   ntfs-3g   users,noauto,noexec,uid=1000,gid=users,dmask=002,fmask=113  0 0
     +UUID=C45E5BF55E5BDEA    /media/C45E5BF55E5BDEAC   ntfs-3g   defaults 0 0 
