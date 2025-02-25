@@ -1,0 +1,32 @@
+---
+title: Antix Linux my Way
+description: A guide to Setup My Antix Linux Environment
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This guide will walk you through my Antix Linux Environment Optimized for Productivity
+
+## Startup Settings
+### Grub
+- Change the Grub Timeout
+
+<Steps>
+1. Edit `/etc/defaults/grub` file add change the 
+    ```diff lang="shell" title="/etc/defaults/grub" wrap
+    # For full documentation of the options in this file, see:
+    #   info -f grub -n 'Simple configuration'
+
+    GRUB_DEFAULT=0
+    -   GRUB_TIMEOUT=5
+    +   GRUB_TIMEOUT=0
+    GRUB_DISTRIBUTOR=`grep PRETTY_NAME /etc/lsb-release | cut -d= -f2 | cut -d\" -f2 2> /dev/null || echo Debian`
+    GRUB_CMDLINE_LINUX_DEFAULT="quiet selinux=0"
+    GRUB_CMDLINE_LINUX=""
+
+    # If your computer has multiple operating systems installed, then you
+    ```
+
+</Steps>
+
+### Disks Mout
