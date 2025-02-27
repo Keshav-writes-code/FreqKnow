@@ -1,3 +1,6 @@
 :root {
   --sl-font: "Atkinson Hyperlegible", sans-serif;
 }
+code {
+  text-wrap-mode: nowrap;
+}
