@@ -7,6 +7,14 @@ import { Steps } from "@astrojs/starlight/components";
 
 This guide will walk you through my Antix Linux Environment Optimized for Productivity
 
+## Chezmoi Way (Automatic)
+
+Just Run this One liner. this Install [ Chezmoi](https://www.chezmoi.io/) configured with my [Dotfile Git Repo](https://github.com/Keshav-writes-code/dotfiles)
+```shell frame=none
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply keshav-writes-code
+```
+
+---
 ## Startup Settings
 ### Grub
 - Change the Grub Timeout
@@ -14,17 +22,12 @@ This guide will walk you through my Antix Linux Environment Optimized for Produc
 <Steps>
 1. Edit `/etc/defaults/grub` file add change the 
     ```diff lang="shell" title="/etc/defaults/grub" wrap
-    # For full documentation of the options in this file, see:
-    #   info -f grub -n 'Simple configuration'
-
     GRUB_DEFAULT=0
     -   GRUB_TIMEOUT=5
     +   GRUB_TIMEOUT=0
     GRUB_DISTRIBUTOR=`grep PRETTY_NAME /etc/lsb-release | cut -d= -f2 | cut -d\" -f2 2> /dev/null || echo Debian`
     GRUB_CMDLINE_LINUX_DEFAULT="quiet selinux=0"
     GRUB_CMDLINE_LINUX=""
-
-    # If your computer has multiple operating systems installed, then you
     ```
 2. Update grub
     ```shell frame="none"
