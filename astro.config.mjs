@@ -7,6 +7,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "FreqKnow",
+      expressiveCode: {
+        styleOverrides: { borderRadius: "0.5rem" },
+      },
       editLink: {
         baseUrl: "https://github.com/Keshav-writes-code/FreqKnow/tree/main",
       },
@@ -33,3 +36,4 @@ export default defineConfig({
   site: "https://keshav.is-a.dev",
   base: "FreqKnow",
 });
+
