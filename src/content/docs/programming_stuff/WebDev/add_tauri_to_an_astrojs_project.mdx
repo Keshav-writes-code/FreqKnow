@@ -1,0 +1,181 @@
+---
+title: Astro on Android with Tauri
+description: A guide to add Tauri to an Astrojs Project to achive Android Support
+---
+import { Steps } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+This guide will walk you through how to setup a Astrojs Project primarily for Android Support using Tauri.
+This Guide assumes that you already have an Astro Js Project Setep and you are familliar with a Astro js Project Structure
+
+## Prerequisites
+- You need to have an App Icon Ready in either `.svg`, `.png` or `.jpg` format in you `[project]/public/` folder
+- As of today, tauri doesn't fully support `SSR` mode in astrojs. so to be on the safe side, you need to be on the `SSG` mode for eveything
+
+## Tooling Setup
+<Steps>
+
+1. ### Install Rust and System Depedencies
+
+    <Tabs>
+      <TabItem label="Linux / Debian" >
+
+        ```shell 
+        sudo apt update
+        sudo apt install libwebkit2gtk-4.1-dev \
+          build-essential \
+          curl \
+          wget \
+          file \
+          libxdo-dev \
+          libssl-dev \
+          libayatana-appindicator3-dev \
+          librsvg2-dev
+        curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh &&
+        rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+        ```
+      </TabItem>
+    </Tabs>
+
+2. ### Setup Android Studio
+    - Download and Install [Android Studio](https://developer.android.com/studio)
+    - Extract it into the `/opt/` directory in linux
+    - run this to setup all your environment variables
+    <Tabs synckey="shell" >
+      <TabItem label="Bash" >
+        ```shell 
+        echo 'export PATH="$PATH:/opt/android-studio/bin"' >> ~/.bashrc &&
+        echo 'export JAVA_HOME=/opt/android-studio/jbr' >> ~/.bashrc &&
+        echo 'export ANDROID_HOME="$HOME/Android/Sdk"' >> ~/.bashrc &&
+        echo 'export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"' >> ~/.bashrc
+        ```
+      </TabItem>
+      <TabItem label="ZSH" >
+
+        ```shell 
+        echo 'export PATH="$PATH:/opt/android-studio/bin"' >> ~/.zshrc &&
+        echo 'export JAVA_HOME=/opt/android-studio/jbr' >> ~/.zshrc &&
+        echo 'export ANDROID_HOME="$HOME/Android/Sdk"' >> ~/.zshrc &&
+        echo 'export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"' >> ~/.zshrc
+        ```
+      </TabItem>
+    </Tabs>
+    Now Open up Android Studio with this commnad
+    ```shell
+    studio
+    ```
+    - Open up SDK Manager from `More Action > SDK Manager` and install the following:
+      1. `SDK Platforms > Android <version> ("<Code>")` (Adnroid 10.0 ("Q") will work)
+      2. `SDK Tools > Android SDK Build-Tools <version>`
+      3. `SDK Tools > NDK (Side by side)`
+      4. `SDK Tools > Android SDK Command-line Tools (latest) `
+      5. `SDK Tools > Android SDK Platform Tools `
+
+</Steps>
+
+## Build Your AstroJs Android App!
+
+<Steps>
+
+1. ### Initialize Tauri
+    ```shell
+    bun add -D @tauri-apps/cli@latest &&
+    bun tauri init
+    ```
+    Fill in the Options that it asks
+    ```shell frame="none"
+    ✔ What is your app name? astrojs-tauri
+    ✔ What should the window title be? astrojs-tauri
+    ✔ Where are your web assets located? ../dist
+    ✔ What is the url of your dev server? http://localhost:4321
+    ✔ What is your frontend dev command? bun dev
+    ✔ What is your frontend build command? bun run build
+    ```
+    Edit the `Identifier` Property in `./src-tauri/tauri.conf.json` File with the project name without spaces like this
+    ```diff lang="json" "<project-name>"
+    {
+      //...
+      "version": "0.1.0",
+    - "identifier": "com.tauri.dev",
+    + "identifier": "com.<project-name>.dev",
+      "build": {
+        //...
+      }
+      //...
+    }
+    ```
+
+2. ### Setup Tauri for Android Support
+    #### Initialize Android Target
+    ```shell
+    bun tauri android init
+    ```
+    give it the Icon's Path
+    ```shell "./public/logo.svg"
+    bun tauri icon ./public/logo.svg
+    ```
+    #### Code Signing
+    run this and fill out all all options correctly
+    ```shell
+    /opt/android-studio/jbr/bin/keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+    ```
+    Create a file named `src-tauri/gen/android/keystore.properties` and add content according to this template
+    ```
+    password=<password defined when keytool was executed>
+    keyAlias=upload
+    storeFile=<location of the key store file, such as /Users/<user name>/upload-keystore.jks>
+    ```
+    Edit the `src-tauri/gen/android/app/build.gradle.kts` file and do the following
+    - Add the needed import at the beginning of the file:
+      ```kts
+      import java.io.FileInputStream    
+      ```
+    - Add the release signing config before the buildTypes block:
+      ```kts {5-18}
+      defaultConfig {
+        ...
+      }
+
+      signingConfigs {
+          create("release") {
+              val keystorePropertiesFile = rootProject.file("keystore.properties")
+              val keystoreProperties = Properties()
+              if (keystorePropertiesFile.exists()) {
+                  keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+              }
+
+              keyAlias = keystoreProperties["keyAlias"] as String
+              keyPassword = keystoreProperties["password"] as String
+              storeFile = file(keystoreProperties["storeFile"] as String)
+              storePassword = keystoreProperties["password"] as String
+          }
+      }
+
+      buildTypes {
+          ...
+      }
+      ```
+    - Use the new release signing config in the release config in buildTypes block:
+      ```kts {6}
+      buildTypes {
+          getByName("debug") {
+              ...
+          }
+          getByName("release") {
+              signingConfig = signingConfigs.getByName("release")
+              ...
+          }
+      }
+      ```
+
+3. ### Build the APK
+    ```shell
+    bun tauri android build --apk --target aarch64 
+    ```
+    APK will be present at `./src-tauri/gen/android/app/build/outputs/apk/universal/release`
+    cd and share it with Nemo File Explorer
+    ```shell
+    cd "./src-tauri/gen/android/app/build/outputs/apk/universal/release"
+    nemo .
+    ```
+</Steps>
