@@ -25,6 +25,10 @@ export default defineConfig({
           label: "Linux",
           autogenerate: { directory: "linux" },
         },
+        {
+          label: "Programming Stuff",
+          autogenerate: { directory: "programming_stuff" },
+        },
       ],
       customCss: [
         "@fontsource/atkinson-hyperlegible/400.css",
@@ -36,4 +40,3 @@ export default defineConfig({
   site: "https://keshav.is-a.dev",
   base: "FreqKnow",
 });
-
