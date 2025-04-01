@@ -70,6 +70,29 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
       3. `SDK Tools > NDK (Side by side)`
       4. `SDK Tools > Android SDK Command-line Tools (latest) `
       5. `SDK Tools > Android SDK Platform Tools `
+    
+    - Now, Add `Android Studio` as an Desktop Application that shows up in App Selection Menues Across the OS 
+    ```shell
+    # Step 1: Create the desktop entry directory if it doesn't exist
+    mkdir -p ~/.local/share/applications
+
+    cat > ~/.local/share/applications/android-studio.desktop << 'EOF'
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Android Studio
+    Comment=Android Studio IDE
+    Exec=/opt/android-studio/bin/studio.sh
+    Icon=/opt/android-studio/bin/studio.png
+    Categories=Development;IDE;
+    Terminal=false
+    StartupWMClass=jetbrains-studio
+    EOF
+
+    chmod +x ~/.local/share/applications/android-studio.desktop
+
+    update-desktop-database ~/.local/share/applications
+    ```
 
 </Steps>
 
