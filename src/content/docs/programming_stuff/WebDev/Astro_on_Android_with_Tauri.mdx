@@ -38,12 +38,12 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
     </Tabs>
 
 2. ### Setup Android Studio
-    - Download and Install [Android Studio](https://developer.android.com/studio)
-    - Extract it into the `/opt/` directory in linux
+    Download and Install [Android Studio](https://developer.android.com/studio)
     Extract it into the `/opt/` directory in linux
       ```shell
       sudo tar -xvf ~/Downloads/android-studio-2024.3.1.14-linux.tar.gz -C /opt/
       ```
+    run this to setup all your environment variables
     <Tabs synckey="shell" >
       <TabItem label="Bash" >
         ```shell 
@@ -67,14 +67,15 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
     ```shell
     studio
     ```
-    - Open up SDK Manager from `More Action > SDK Manager` and install the following:
-      1. `SDK Platforms > Android <version> ("<Code>")` (Adnroid 10.0 ("Q") will work)
-      2. `SDK Tools > Android SDK Build-Tools <version>`
-      3. `SDK Tools > NDK (Side by side)`
-      4. `SDK Tools > Android SDK Command-line Tools (latest) `
-      5. `SDK Tools > Android SDK Platform Tools `
+
+    Open up SDK Manager from `More Action > SDK Manager` and install the following:
+    1. `SDK Platforms > Android <version> ("<Code>")` (Adnroid 10.0 ("Q") will work)
+    2. `SDK Tools > Android SDK Build-Tools <version>`
+    3. `SDK Tools > NDK (Side by side)`
+    4. `SDK Tools > Android SDK Command-line Tools (latest) `
+    5. `SDK Tools > Android SDK Platform Tools `
     
-    - Now, Add `Android Studio` as an Desktop Application that shows up in App Selection Menues Across the OS 
+    Now, Add `Android Studio` as an Desktop Application that shows up in App Selection Menues Across the OS 
     ```shell
     # Step 1: Create the desktop entry directory if it doesn't exist
     mkdir -p ~/.local/share/applications
