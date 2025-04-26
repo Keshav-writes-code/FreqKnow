@@ -1,0 +1,82 @@
+---
+title: Mysql Setup on Antix Linux
+description: A guide to Setup Mysql on Antix Linux Runinit
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Steps } from "@astrojs/starlight/components";
+
+This guide will walk you through setting up MySql on Antix linux runinit system. [Reference](https://dev.mysql.com/doc/refman/8.4/en/linux-installation-apt-repo.html)
+
+## Installation
+
+<Steps>
+1. ### Adding the MySQL Apt Repository
+
+    download the [MySQL APT Repo](https://dev.mysql.com/downloads/repo/apt/).
+    Then install the package with dpkg
+
+    ```sh
+    sudo dpkg -i ~/Downloads/mysql-apt-config_0.8.34-1_all.deb
+    ```
+    select `OK` when it prompts you to go with the default options
+
+2.  ### Install MySQL Toolchain
+
+    ```sh
+    sudo apt update
+    sudo apt install mysql-server
+    ```
+
+    then set a password for the root user for MySQL when it asks
+
+3.  ### Create a Service for your `Init System`
+
+            <Tabs synckey="init" >
+              <TabItem label="Runinit" >
+                ```sh
+                sudo mkdir -p /etc/sv/mysql
+                sudo tee /etc/sv/mysql/run > /dev/null <<'EOF'
+                #!/bin/sh
+                exec chpst -u mysql /usr/sbin/mysqld
+                EOF
+                sudo chmod +x /etc/sv/mysql/run
+                sudo ln -s /etc/sv/mysql /var/service/
+                ```
+                Now runit will detect and manage MySQL service
+              </TabItem>
+              <TabItem label="SystemV" >
+                ```sh
+                // TODO: Need to complete this code snippet
+                ```
+                Now runit will detect and manage MySQL service
+              </TabItem>
+            </Tabs>
+
+4.  Test if Eveything worked
+
+    ```sh
+    mysql -u root -p
+    ```
+
+</Steps>
+
+## Change Root Password (Optional)
+
+<Steps>
+
+1. Open mysql shell
+
+   ```sh
+   sudo mysql
+   ```
+
+2. run command to change Password
+
+   ```sql
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'yourPasswordHere';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+</Steps>
