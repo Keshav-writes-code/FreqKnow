@@ -80,3 +80,13 @@ This guide will walk you through setting up MySql on Antix linux runinit system.
    ```
 
 </Steps>
+
+## Common Problem
+
+when running `$: mysql -u root -p` if you get
+`ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)`
+
+```sh
+sudo mkdir -p /var/run/mysqld
+sudo chown mysql:mysql /var/run/mysqld
+```
