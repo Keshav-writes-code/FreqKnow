@@ -1,0 +1,67 @@
+---
+title: animated history for a git repo
+description: A guide to install Gource on linux which show us an animated history of a Git repo
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This tutorial will walk you through how to install and use [Gource](https://gource.io/), a tool that Shows an Animated Git repo Evolution with some Aesthetic Visuals
+
+i will be showing you how to manually compile and install [Gource](https://gource.io/) on [Antix Linux](https://antixlinux.com/)
+
+## Setup Gource
+
+<Steps>
+
+1. ### Prepare
+
+   Install Build Dependencies
+
+   ```sh
+   sudo apt install libsdl2-dev libsdl2-image-dev libpcre2-dev libfreetype6-dev libglew-dev libglm-dev libboost-filesystem-dev libpng-dev libtinyxml-dev
+   ```
+
+   Download Source Codebase from [Gource github](https://github.com/acaudwell/Gource)
+
+   ```sh
+   curl -L -o ~/Downloads/gource.tar.gz https://github.com/acaudwell/Gource/releases/download/gource-0.55/gource-0.55.tar.gz &&
+   tar -xvf ~/Downloads/gource.tar.gz
+   ```
+
+2. ### Compile & Install
+
+   ```sh
+   cd ~/Downloads/gource-0.55/ &&
+   ./configure &&
+   make &&
+   sudo make install
+   ```
+
+</Steps>
+
+## Usage
+
+just cd into a git repo and run the `gource` command
+
+```sh
+$: cd git-project
+$: gource
+```
+
+## Common Error
+
+if error occurs `failed to load resource '.../data/file.png'` while running the gource command, then you need to manually compile and install SDL2 as Suggested by this issue [failed to load resource '/usr/local/share/gource/file.png'](https://github.com/acaudwell/Gource/issues/43)
+
+Just run this command
+
+```sh
+sudo apt install build-essential git cmake libsdl2-dev &&
+git clone https://github.com/libsdl-org/SDL_image.git &&
+cd SDL_image &&
+git checkout SDL2 &&
+mkdir build &&
+cd build &&
+cmake .. &&
+make &&
+sudo make install
+```
