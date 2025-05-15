@@ -1,0 +1,99 @@
+---
+title: Debloat Any Android Device
+description: A guide to Debloat any Android Based OS
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+This guide will walk you through how to Debloat any android Device
+
+This Guide assumes that you have :-
+
+- A Linux PC
+- An Android phone to Debloat
+- An Usb Cable to connect the Android Phone to the Pc
+
+## Prerequisites
+
+<Steps>
+
+1. ### Turn on Developer Mode
+
+   On your Android phone, Enable Developper Options by :-
+
+   - go to `Setting > About > Version`
+   - On this Page, find the `Build Number` Element
+   - Click it 10 times
+   - It would say that `Your are 9..8..7..6 clicks away from being a developer`
+   - Then it would say `You are a Developer Now` Meaning Developer mode is Turned ON now
+
+2. ### Turn on USB Debugging
+
+   on your Android phone, go to :-
+
+   - `Setting > Additional Settings > Developper Options`
+   - Scroll a full Page and find `USB Debugging` on the bottom of the page and turn it On
+
+3. ### Install Tools
+
+   on your Linux Computer, install some Dependencies Packages
+
+   ```sh
+   sudo apt install adb curl
+   ```
+
+   then Download the `Universal Android Debloat` Tool from
+
+   - go to the [Releases Page](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/releases).
+   - Download the file named `uad-ng-linux`
+   - now make it Executable
+
+   ```sh
+   chmod +x uad-ng-linux
+
+   ```
+
+</Steps>
+
+## Debloat Steps
+
+<Steps>
+
+1. ### Connect Phone to PC
+
+   Connect the Usb to you Android and PC, then :-
+
+   - a Popup Appears with a title `Use USB To`. Select `Charge Only`.
+   - Now another Dialog should Appear with title `Allow USB Debugging`.
+   - Click Allow, if no Dialog seems to appear, follow these steps to fix it [linked below](/FreqKnow/linux/debloat-android/#common-problems)
+
+   - Check if the android device was detected or not
+
+     ```sh
+     adb devices
+     ```
+
+   - if it outputs something like this , that means that the device was successfully recognized by adb.
+
+     ```sh frame='none' "<Device_serial_id> device"
+     $: adb devices
+     List of devices attached
+     <Device_serial_id> device
+     ```
+
+2. ### Run the Debloater Tool
+
+   Let's run the Actuall Tool that does the Debloating.
+   We Have Already download the executable from github, now we just run it by
+
+   ```sh
+    ~/Downloads/uad-ng-linux
+   ```
+
+3. ### Usage of the Debloater Tool
+
+   In this tool, you will see the recommended apps to remove in a list like UI with a Checkbox next to each item. Just click the one you want to Uninstall and Click the `Review Selection` button then `Apply` button to remove the Apps
+
+</Steps>
+
+## Common Problems
