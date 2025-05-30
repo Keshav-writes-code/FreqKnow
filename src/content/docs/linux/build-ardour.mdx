@@ -1,0 +1,46 @@
+---
+title: Build Ardour for Linux
+description: A guide to build ardour daw on linux (and optionally on Windows on Mingw)
+---
+
+OS : Antix Linux (a Debian Based Distro without Systemd)
+
+## Install Dependencies
+
+```sh
+sudo apt install build-essential git libboost-all-dev gcc g++ pkg-config \
+libasound2-dev libgtk2.0-dev libglibmm-2.4-dev libsndfile1-dev libarchive-dev \
+liblo-dev libtag1-dev vamp-plugin-sdk librubberband-dev libfftw3-dev \
+libaubio-dev libxml2-dev libsamplerate0-dev lv2-dev libserd-dev libsord-dev \
+libsratom-dev liblilv-dev libgtkmm-2.4-dev libjack-jackd2-dev libogg-dev \
+libcppunit-dev libwebsockets-dev libusb-dev libsuil-dev libdbus-1-dev xjadeo \
+libusb-1.0-0-dev libreadline-dev libpangomm-1.4-dev python3 liblrdf0-dev \
+libraptor2-dev python-is-python3
+```
+
+## Clone git repo
+
+```sh
+git clone https://github.com/Ardour/ardour.git
+```
+
+## Switch Branch to Latest Release Version
+
+```sh
+cd ardour
+git checkout release/8.12
+```
+
+## Build
+
+```sh
+./waf configure --cxx11 --optimize &&
+./waf -j `nproc` &&
+./waf install
+```
+
+## Done
+
+```sh
+ardour8
+```
