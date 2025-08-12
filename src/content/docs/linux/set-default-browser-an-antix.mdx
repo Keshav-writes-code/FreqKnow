@@ -3,11 +3,41 @@ title: Set Default Browser in Antix Linux
 description: How to Set Default Browser in Antix linux
 ---
 
+import { Steps } from "@astrojs/starlight/components";
+
 So, you have to have a .desktop file with the name of the browser in either these 2 directories
 
 - `~/.local/share/applications/`
 - `/usr/share/applications/`
 
-```sh
-xdg-settings set default-web-browser name_of_the_browser_file.desktop
-```
+There are 3 commands that set default browser in diffrent ways (why didn't they made it a single Command?)
+
+<Steps>
+
+1. ## Set Default for most general Launches
+
+   **Pupose** : controls which browser to Lauch when another app (Like Login with Google button in Zoom) calls the default browser
+
+   ```sh
+   xdg-settings set default-web-browser name_of_the_browser_file.desktop
+   ```
+
+2. ## Set Default for cli tools or Scripts
+
+   Terminal tools or scripts that call the `x-www-browser` command
+
+   ```sh
+   sudo update-alternatives --config x-www-browser
+   ```
+
+   then it shows a list of Browsers to Choose from, enter the Serial number of the browser as shown in the list
+
+3. ## Set default for Antix Specific things
+
+   Icons like the `Web Browser Icon` that opens Deafult Web browser based on Antix's Configurations
+
+   ```sh
+   desktop-defaults-set browser name_of_the_browser_file.desktop
+   ```
+
+</Steps>
