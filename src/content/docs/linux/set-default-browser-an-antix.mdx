@@ -1,0 +1,13 @@
+---
+title: Set Default Browser in Antix Linux
+description: How to Set Default Browser in Antix linux
+---
+
+So, you have to have a .desktop file with the name of the browser in either these 2 directories
+
+- `~/.local/share/applications/`
+- `/usr/share/applications/`
+
+```sh
+xdg-settings set default-web-browser name_of_the_browser_file.desktop
+```
