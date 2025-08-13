@@ -10,7 +10,7 @@ export function analytics(): AstroIntegration {
           `
 const API_URL = "https://freq-know-analytics.dhimankeshav201.workers.dev/track/";
 
-export function trackPageEntry() {
+function trackPageEntry() {
   // Don't track in development
   if (window.location.hostname === "localhost") return;
 
@@ -27,7 +27,7 @@ export function trackPageEntry() {
     }).catch(() => {}); // Silent fail
   }
 }
-console.log("HELLO")
+trackPageEntry()
         `,
         );
       },
