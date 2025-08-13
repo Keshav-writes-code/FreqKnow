@@ -3,6 +3,10 @@ name = "freq-know-analytics"
 main = "src/index.ts"
 compatibility_date = "2025-08-13"
 
+[observability.logs]
+enabled = true
+
+
 # compatibility_flags = [
 #   "nodejs_compat"
 # ]
