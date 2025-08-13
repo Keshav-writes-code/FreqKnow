@@ -27,6 +27,7 @@ export function trackPageEntry() {
     }).catch(() => {}); // Silent fail
   }
 }
+console.log("HELLO")
         `,
         );
       },
