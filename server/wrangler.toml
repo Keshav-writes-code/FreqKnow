@@ -1,5 +1,5 @@
 "$schema" = "node_modules/wrangler/config-schema.json"
-name = "server"
+name = "freq-know-analytics"
 main = "src/index.ts"
 compatibility_date = "2025-08-13"
 
