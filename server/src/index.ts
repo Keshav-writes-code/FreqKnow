@@ -13,7 +13,7 @@ declare global {
 app.use(
   cors({
     origin: ["https://keshav.is-a.dev"],
-    allowMethods: ["POST"],
+    allowMethods: ["GET"],
   }),
 );
 app.use(appendTrailingSlash());
