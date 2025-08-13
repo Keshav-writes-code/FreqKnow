@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { analytics } from "./src/integrations/analytics";
 
 // https://astro.build/config
 export default defineConfig({
@@ -36,6 +37,7 @@ export default defineConfig({
         "./src/styles/custom.css",
       ],
     }),
+    analytics(),
   ],
   site: "https://keshav.is-a.dev",
   base: "FreqKnow",
