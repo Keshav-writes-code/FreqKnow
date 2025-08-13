@@ -1,6 +1,7 @@
 import { createClient, Client } from "@libsql/client";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { appendTrailingSlash } from "hono/trailing-slash";
 
 const app = new Hono();
 
@@ -15,6 +16,7 @@ app.use(
     allowMethods: ["POST"],
   }),
 );
+app.use(appendTrailingSlash());
 
 app.get("*", async ({ env }, next) => {
   if (!globalThis.tursoClient) {
@@ -29,7 +31,7 @@ app.get("*", async ({ env }, next) => {
   await next();
 });
 
-app.get("/track", async (c) => {
+app.get("/track/", async (c) => {
   try {
     const turso = globalThis.tursoClient;
     if (!turso) throw new Error("Turso Client is not Initialized");
