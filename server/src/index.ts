@@ -10,7 +10,7 @@ declare global {
   var tursoClient: Client | undefined;
 }
 
-app.use(
+app.use("*",
   cors({
     origin: ["https://keshav.is-a.dev"],
     allowMethods: ["GET"],
