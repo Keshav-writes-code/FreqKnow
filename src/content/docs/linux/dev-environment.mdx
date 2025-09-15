@@ -6,11 +6,11 @@ import { Steps } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 This guide will walk you through my Webdev Environment Setup.
-My OS of choice is Antix Linux
+My OS of choice is [ Antix Linux ](https://antixlinux.com/) but this guide is also tailored for [ Ubuntu ](https://ubuntu.com/) and [ Debian ](https://www.debian.org/) users
 
 ## Install Prerequisite
 ```shell 
-sudo apt install curl git fzf fd-find zsh
+sudo apt install curl git fzf fd-find
 ```
 
 ## Terminal Setup
@@ -21,13 +21,6 @@ sudo apt install curl git fzf fd-find zsh
 1. ### Alacritty
     Install the [Alacritty](https://alacritty.org/) Terminal Emulator
     <Tabs>
-      <TabItem label="Ubuntu">
-        ```shell 
-        sudo add-apt-repository ppa:aslatter/ppa -y
-        sudo apt install alacritty
-        ```
-        Restart Ubuntu and Alacritty should be you default Terminal
-      </TabItem>
       <TabItem label="Debian">
         ```shell 
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh &&
@@ -35,29 +28,64 @@ sudo apt install curl git fzf fd-find zsh
         cargo install alacritty
         ```
       </TabItem>
+      <TabItem label="Ubuntu">
+        ```shell 
+        sudo add-apt-repository ppa:aslatter/ppa -y
+        sudo apt install alacritty
+        ```
+        Restart Ubuntu and Alacritty should be you default Terminal
+      </TabItem>
     </Tabs>
-2. ### Oh My Zsh
-    install the [Oh My Zsh](https://ohmyz.sh/) framework for [ZSH](https://www.zsh.org/) Shell
+2. ### Oh My Fish
+    First install Fish Shell. [ official download instructions ](https://fishshell.com/)
+    <Tabs>
+      <TabItem label="Debian 13">
+        ```shell 
+        echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/4/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:4.list
+        curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:4/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_4.gpg > /dev/null
+        sudo apt update
+        sudo apt install fish
+        ```
+      </TabItem>
+      <TabItem label="Debian 12">
+        ```shell 
+        echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/4/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:4.list
+        curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:4/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_4.gpg > /dev/null
+        sudo apt update
+        sudo apt install fish
+        ```
+      </TabItem>
+      <TabItem label="Ubuntu">
+        ```shell 
+        sudo add-apt-repository ppa:fish-shell/release-4
+        sudo apt update
+        ```
+      </TabItem>
+    </Tabs>
+
+    then install the [Oh My fish](https://github.com/oh-my-fish/oh-my-fish) framework for the Fish Shell
+
     ```shell 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+    ```
+    also set the omf theme to [ batman ](https://github.com/oh-my-fish/theme-batman)
+    ```sh
+    omf install batman
     ```
 3. ### Zoxide
-    Install a smarter cd command alternative. [zoxide](https://github.com/ajeetdsouza/zoxide) 
+    Install a smarter cd command alternative. [zoxide](https://github.com/ajeetdsouza/zoxide) for fish shell
 
     ```shell 
     curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-    echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.zshrc
-    echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
-    echo 'eval "$(zoxide init zsh)"' >> ~/.zshrc
-    echo 'eval "$(zoxide init zsh)"' >> ~/.bashrc
-    source ~/.zshrc
+    echo 'zoxide init fish | source' >> ~/.config/fish/config.fish
+    source ~/.config/fish/config.fish
     ```
 </Steps>
 
 ## Neovim Setup
 
 - I like to use [Lazyvim](https://www.lazyvim.org/) 
-- Debian (ZSH) Based Steps
+- Debian ([Fish](https://fishshell.com/)) Based Steps
 
 <Steps>
 
@@ -68,8 +96,8 @@ sudo apt install curl git fzf fd-find zsh
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
     sudo rm -rf /opt/nvim
     sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-    echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
-    source ~/.zshrc
+    fish_add_path /opt/nvim-linux-x86_64/bin
+    source ~/.config/fish/config.fish
     ```
 2. ### Lazyvim 
     Install my Custom Fork of Lazyvim config 
@@ -81,18 +109,18 @@ sudo apt install curl git fzf fd-find zsh
 3. ### Lazygit 
     Install [ Lazygit](https://github.com/jesseduffield/lazygit), a simple terminal UI for git commands
     <Tabs>
-      <TabItem label="bash, zsh">
-        ```shell 
-        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
-        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-        tar xf lazygit.tar.gz lazygit
-        sudo install lazygit -D -t /usr/local/bin/
-        ```
-      </TabItem>
       <TabItem label="fish">
         ```shell 
         set LAZYGIT_VERSION (curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | string match -r '"tag_name": *"v([^"]*)"' | head -n 2 | tail -n 1)
         curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v$LAZYGIT_VERSION/lazygit_"$LAZYGIT_VERSION"_Linux_x86_64.tar.gz"
+        tar xf lazygit.tar.gz lazygit
+        sudo install lazygit -D -t /usr/local/bin/
+        ```
+      </TabItem>
+      <TabItem label="bash, zsh">
+        ```shell 
+        LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
         tar xf lazygit.tar.gz lazygit
         sudo install lazygit -D -t /usr/local/bin/
         ```
