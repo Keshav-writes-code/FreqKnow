@@ -6,7 +6,13 @@ import { Steps } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 This guide will walk you through how to setup a Astrojs Project primarily for Android Support using Tauri.
-This Guide assumes that you already have an Astro Js Project Setep and you are familliar with a Astro js Project Structure
+
+
+Guide is tailored to work on these Operating Systems and shells
+|   |   |   |   |   |
+| - | - | - | - | - |
+| **OS**  | Debian | Ubuntu | Antix | Arch |
+| **Shell** | Bash | ZSH | Fish |
 
 ## Prerequisites
 - You need to have an App Icon Ready in either `.svg`, `.png` or `.jpg` format in you `[project]/public/` folder
@@ -18,7 +24,7 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
 1. ### Install Rust and System Depedencies
 
     <Tabs>
-      <TabItem label="Linux / Debian" >
+      <TabItem label="Linux / Debian, Ubuntu" >
 
         ```shell 
         sudo apt update
@@ -35,10 +41,28 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
         rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
         ```
       </TabItem>
+      <TabItem label="Linux / Arch" >
+
+        ```shell 
+        sudo pacman -Syu
+        sudo pacman -S webkit2gtk \
+          base-devel \
+          curl \
+          wget \
+          file \
+          libxdo \
+          openssl \
+          libayatana-appindicator \
+          librsvg
+        curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh &&
+        rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+        ```
+      </TabItem>
     </Tabs>
 
 2. ### Setup Android Studio
     Download and Install [Android Studio](https://developer.android.com/studio)
+
     Extract it into the `/opt/` directory in linux
       ```shell
       sudo tar -xvf ~/Downloads/android-studio-2024.3.1.14-linux.tar.gz -C /opt/
@@ -47,19 +71,32 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
     <Tabs synckey="shell" >
       <TabItem label="Bash" >
         ```shell 
-        echo 'export PATH="$PATH:/opt/android-studio/bin"' >> ~/.bashrc &&
-        echo 'export JAVA_HOME=/opt/android-studio/jbr' >> ~/.bashrc &&
-        echo 'export ANDROID_HOME="$HOME/Android/Sdk"' >> ~/.bashrc &&
-        echo 'export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"' >> ~/.bashrc
+        cat << 'EOF' >> ~/.bashrc
+        export PATH="$PATH:/opt/android-studio/bin"
+        export JAVA_HOME=/opt/android-studio/jbr
+        export ANDROID_HOME="$HOME/Android/Sdk"
+        export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+        EOF
         ```
       </TabItem>
       <TabItem label="ZSH" >
 
         ```shell 
-        echo 'export PATH="$PATH:/opt/android-studio/bin"' >> ~/.zshrc &&
-        echo 'export JAVA_HOME=/opt/android-studio/jbr' >> ~/.zshrc &&
-        echo 'export ANDROID_HOME="$HOME/Android/Sdk"' >> ~/.zshrc &&
-        echo 'export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"' >> ~/.zshrc
+        cat << 'EOF' >> ~/.zshrc
+        export PATH="$PATH:/opt/android-studio/bin"
+        export JAVA_HOME=/opt/android-studio/jbr
+        export ANDROID_HOME="$HOME/Android/Sdk"
+        export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 $ANDROID_HOME/ndk)"
+        EOF
+        ```
+      </TabItem>
+      <TabItem label="Fish" >
+
+        ```shell 
+        fish_add_path /opt/android-studio/bin
+        set -Ux ANDROID_HOME $HOME/Android/Sdk
+        set -Ux NDK_HOME $ANDROID_HOME/ndk
+        set -Ux JAVA_HOME /opt/android-studio/jbr
         ```
       </TabItem>
     </Tabs>
@@ -101,6 +138,8 @@ This Guide assumes that you already have an Astro Js Project Setep and you are f
 </Steps>
 
 ## Build Your AstroJs Android App!
+
+I recommend initializing Tauri mannualy instead of using a Preconfigured Template because of several automation tricks built into the Tauri CLI that make your required configs easy to configure (eg. seeting up name, icons, etc). so this guide will assume that you have already initialized your astrojs project
 
 <Steps>
 
