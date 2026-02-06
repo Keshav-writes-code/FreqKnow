@@ -1,0 +1,102 @@
+---
+title: QEMU on antiX Linux
+description: A guide to Setup QEMU on antiX Linux 23.2
+---
+
+import { Steps } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+this guide will walk you though setting up QEMU, Virt Manager on Antix Linux runit v23.2, the instructions are inspired by [ this antix linux forum ](https://www.antixforum.com/forums/topic/how-to-setup-qemu-virt-manager-virt-viewer-on-antix-linux/)
+
+<Steps>
+1. ## Install Dependecies
+
+    according to official [ QEMU guide ](https://www.qemu.org/download/#linux), run install these Dependecies
+    ```sh
+    sudo apt install qemu-system qemu-utils dnsmasq-base qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager gir1.2-spiceclientgtk-3.0 spice-vdagent
+
+    ```
+2. ## Setup Deamons and Services
+
+     to setup the `libvirtd`, `virtlockd`, `virtlogd` services, clone this  [ gitlab repo ](https://gitlab.com/techore/libvirt-runit)
+    ```sh
+    git clone https://gitlab.com/techore/libvirt-runit
+    ```
+    then copy the files to the required locations
+    ```sh
+    cd libvirt-runit
+
+    sudo cp -r etc/* /etc/
+    sudo cp -r var/* /var/
+
+    sudo ln -s /etc/sv/libvirtd /etc/service/libvirtd
+    sudo ln -s /etc/sv/virtlockd /etc/service/virtlockd
+    sudo ln -s /etc/sv/virtlogd /etc/service/virtlogd
+
+    sudo sv start libvirtd
+    sudo sv start virtlockd
+    sudo sv start virtlogd
+
+    sudo mkdir /usr/share/runit/sv/libvirtd
+    sudo mkdir /usr/share/runit/sv/virtlockd
+    sudo mkdir /usr/share/runit/sv/virtlogd
+
+    sudo cp /etc/sv/libvirtd/run /usr/share/runit/sv/libvirtd/
+    sudo cp /etc/sv/virtlockd/run /usr/share/runit/sv/virtlockd/
+    sudo cp /etc/sv/virtlockd/run /usr/share/runit/sv/virtlockd/
+    ```
+
+    now, set the qemu network service on host system to autostart on startup
+    ```sh
+    sudo virsh net-autostart default
+    ```
+
+3. ## Add User to `libvirt` group
+
+    this step is a common miss, not doing this causes `authentication unavailable: no polkit agent available to authenticate action 'org.libvirt.unix.manage'`
+    
+    ```sh
+    sudo usermod -aG libvirt $(whoami)
+    ```
+
+4. ## Setup shared clipboard (Optional)
+    if you're running a linux OS in the Virtual Machine and want to have a shared clipboard amoung host and guest OS, then : 
+    on the **Guest System** (the Virtual Machine),
+    you need to install the `spice-vdagent` package \
+    choose your **Guest OS** and run the given command :
+
+    <Tabs>
+      <TabItem label="Debian Based">
+        ```shell 
+        sudo apt install spice-vdagent
+        ```
+      </TabItem>
+      <TabItem label="Fedora Based">
+        ```shell 
+        sudo dnf install spice-vdagent
+        ```
+      </TabItem>
+      <TabItem label="Arch Based">
+        ```shell 
+        sudo pacman -S spice-vdagent
+        ```
+      </TabItem>
+    </Tabs>
+
+    after that, you need to start the `spice-vdagent` on startup on your **Guest OS**\
+    choose the **Guest OS** to see instruction
+
+    <Tabs>
+      <TabItem label="Antix Linux">
+         add this line at the end to the `~/.desktop-session/startup` file
+        ```sh
+        spice-vdagent &
+        ```
+      </TabItem>
+      <TabItem label="Other Os">
+        you would need to google for "how to setup a service to run on startup on \<your os\>"
+      </TabItem>
+    </Tabs>
+</Steps>
+
+
