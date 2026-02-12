@@ -8,15 +8,17 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 this guide will walk you though setting up QEMU, Virt Manager on Antix Linux runit v23.2, the instructions are inspired by [ this antix linux forum ](https://www.antixforum.com/forums/topic/how-to-setup-qemu-virt-manager-virt-viewer-on-antix-linux/)
 
+## Steps
+
 <Steps>
-1. ## Install Dependecies
+1. ### Install Dependecies
 
     according to official [ QEMU guide ](https://www.qemu.org/download/#linux), run install these Dependecies
     ```sh
     sudo apt install qemu-system qemu-utils dnsmasq-base qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager gir1.2-spiceclientgtk-3.0 spice-vdagent
 
     ```
-2. ## Setup Deamons and Services
+2. ### Setup Deamons and Services
 
      to setup the `libvirtd`, `virtlockd`, `virtlogd` services, clone this  [ gitlab repo ](https://gitlab.com/techore/libvirt-runit)
     ```sh
@@ -51,7 +53,7 @@ this guide will walk you though setting up QEMU, Virt Manager on Antix Linux run
     sudo virsh net-autostart default
     ```
 
-3. ## Add User to `libvirt` group
+3. ### Add User to `libvirt` group
 
     this step is a common miss, not doing this causes `authentication unavailable: no polkit agent available to authenticate action 'org.libvirt.unix.manage'`
     
@@ -59,44 +61,59 @@ this guide will walk you though setting up QEMU, Virt Manager on Antix Linux run
     sudo usermod -aG libvirt $(whoami)
     ```
 
-4. ## Setup shared clipboard (Optional)
-    if you're running a linux OS in the Virtual Machine and want to have a shared clipboard amoung host and guest OS, then : 
-    on the **Guest System** (the Virtual Machine),
-    you need to install the `spice-vdagent` package \
-    choose your **Guest OS** and run the given command :
-
-    <Tabs>
-      <TabItem label="Debian Based">
-        ```shell 
-        sudo apt install spice-vdagent
-        ```
-      </TabItem>
-      <TabItem label="Fedora Based">
-        ```shell 
-        sudo dnf install spice-vdagent
-        ```
-      </TabItem>
-      <TabItem label="Arch Based">
-        ```shell 
-        sudo pacman -S spice-vdagent
-        ```
-      </TabItem>
-    </Tabs>
-
-    after that, you need to start the `spice-vdagent` on startup on your **Guest OS**\
-    choose the **Guest OS** to see instruction
-
-    <Tabs>
-      <TabItem label="Antix Linux">
-         add this line at the end to the `~/.desktop-session/startup` file
-        ```sh
-        spice-vdagent &
-        ```
-      </TabItem>
-      <TabItem label="Other Os">
-        you would need to google for "how to setup a service to run on startup on \<your os\>"
-      </TabItem>
-    </Tabs>
 </Steps>
 
+## Setup shared clipboard (Optional)
+if you're running a linux OS in the Virtual Machine and want to have a shared clipboard amoung host and guest OS, then : 
+on the **Guest System** (the Virtual Machine),
+you need to install the `spice-vdagent` package \
+choose your **Guest OS** and run the given command :
+
+<Tabs>
+  <TabItem label="Debian Based">
+    ```shell 
+    sudo apt install spice-vdagent
+    ```
+  </TabItem>
+  <TabItem label="Fedora Based">
+    ```shell 
+    sudo dnf install spice-vdagent
+    ```
+  </TabItem>
+  <TabItem label="Arch Based">
+    ```shell 
+    sudo pacman -S spice-vdagent
+    ```
+  </TabItem>
+</Tabs>
+
+after that, you need to start the `spice-vdagent` on startup on your **Guest OS**\
+choose the **Guest OS** to see instruction
+
+<Tabs>
+  <TabItem label="Antix Linux">
+    create a file at `/etc/sv/spice-vdagent/run`
+    ```sh
+    sudo vim /etc/sv/spice-vdagent/run
+    ```
+    and add this exact content to it
+    ```sh
+    #!/bin/sh 
+    mkdir -p /run/spice-vdagentd 
+    exec /usr/sbin/spice-vdagentd -x  
+    ```
+    then create a symlink of `/etc/sv/spice-vdagent` to `/etc/service/` directory
+    ```sh
+    sudo ln -s /etc/sv/spice-vdagentd /etc/service/
+    ```
+
+    finally add this line at the end to the `~/.desktop-session/startup` file using vim, nano, anything you like
+    ```sh
+    spice-vdagent &
+    ```
+  </TabItem>
+  <TabItem label="Other Os">
+    you would need to google for "how to setup a service to run on startup on \<your os\>"
+  </TabItem>
+</Tabs>
 
